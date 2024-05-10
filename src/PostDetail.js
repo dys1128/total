@@ -1,49 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Comments from './Comments';  // 댓글 컴포넌트 import
+import Comments from './Comments';
 
+function PostDetail({ posts, setPosts }) {
+  const { postId } = useParams();
+  const navigate = useNavigate();
+  const postIndex = posts.findIndex(p => p.id === parseInt(postId));
+  const post = posts[postIndex];
+  
+  // Increment view count on component mount
+  useEffect(() => {
+    if (post) {
+      // Create a copy and update the view count
+      const updatedPosts = [...posts];
+      updatedPosts[postIndex] = { ...post, views: post.views + 1 };
 
-function PostDetail({ posts, setPosts}) {
-    const { postId } = useParams();
-    const navigate = useNavigate();
-    const post = posts.find(p => p.id === parseInt(postId));
-    const [showOptions, setShowOptions] = useState(false);
-    console.log(post);
-
-    if (!post) {
-        return <div>게시글을 찾을 수 없습니다.</div>;
+      localStorage.setItem('posts', JSON.stringify(updatedPosts));
+      setPosts(updatedPosts);
     }
+  }, [postId]);  // Only rerun this effect if postId changes
 
-    const toggleOptions = () => {
-        setShowOptions(!showOptions);
-    };
-    
-    const deletePost = () => {
-        const updatedPosts = posts.filter(post => post.id !== postId);
-        console.log(updatedPosts);
-        localStorage.setItem('posts', JSON.stringify(updatedPosts));
-        navigate('/community');  // 삭제 후 커뮤니티 페이지로 리디렉션
-    };
-    
-    const editPost = () => {
-      navigate(`/community/new-post`, { state: { post } });  // Pass current post data to the editing route
+  if (!post) {
+    return <div>게시글을 찾을 수 없습니다.</div>;
+  }
+
+  if (!post) {
+    return <div>게시글을 찾을 수 없습니다.</div>;
+  }
+
+  const deletePost = () => {
+    const updatedPosts = posts.filter(p => p.id !== parseInt(postId));
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
+    setPosts(updatedPosts);
+    navigate('/community');
+  };
+
+  const editPost = () => {
+    navigate(`/community/new-post`, { state: { post } });
   };
 
   return (
     <div>
-    <button onClick={toggleOptions}>...</button>
-    {showOptions && (
-        <div>
-          <button onClick={editPost}>수정하기</button>
-          <button onClick={deletePost}>삭제하기</button>
-        </div>
-      )}
-      <h1>{post.title}</h1> 
+      <h1>{post.title}</h1>
+      <p>조회수 {post.views}</p>
       <p>{post.author} - {new Date(post.date).toLocaleDateString()}</p>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      
       <Comments postId={parseInt(postId)} />
-
+      <button onClick={editPost}>수정하기</button>
+      <button onClick={deletePost}>삭제하기</button>
     </div>
   );
 }
