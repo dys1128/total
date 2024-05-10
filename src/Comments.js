@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './Commments.module.css'
 
 function Comments({ postId }) {
     const [comments, setComments] = useState([]);
@@ -26,22 +27,27 @@ function Comments({ postId }) {
       setCommentText('');  // 입력 필드 초기화
     };
     return (
-        <div>
-          <h3>댓글</h3>
-          {comments.map(comment => (
-            <div key={comment.id}>
-              <p><strong>{comment.author}</strong> ({new Date(comment.date).toLocaleString()}):</p>
-              <p>{comment.content}</p>
-            </div>
-          ))}
-          <div>
+        <div className={`${styles.con} ${styles.reply}`}>
+          <h3 className="">댓글</h3>
+          <section class={`${styles.reply_list} ${styles.table_common}`}>
+            <table border="1">
+              {comments.map(comment => (
+                <div key={comment.id}>
+                  <p><strong>{comment.author}</strong> ({new Date(comment.date).toLocaleString()}):</p>
+                  <p>{comment.content}</p>
+                </div>
+              ))}
+            </table>
+          </section>
+          <h3 className=''>댓글 입력</h3>
+          <section className="styles.reply_form">
             <textarea
               value={commentText}
               onChange={e => setCommentText(e.target.value)}
               placeholder="댓글을 입력하세요..."
             />
             <button onClick={handleAddComment}>댓글 추가</button>
-          </div>
+          </section>
         </div>
       );
 
