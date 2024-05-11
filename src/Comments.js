@@ -29,7 +29,7 @@ function Comments({ postId }) {
     return (
         <div className={`${styles.con} ${styles.reply}`}>
           <h3 className="">댓글</h3>
-          <section class={`${styles.reply_list} ${styles.table_common}`}>
+          <section className={`${styles.reply_list} ${styles.table_common}`}>
             <table border="1">
               {comments.map(comment => (
                 <div key={comment.id}>

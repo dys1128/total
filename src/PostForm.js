@@ -39,16 +39,16 @@ function PostForm({ posts, setPosts, post: initialPost }) {
        <form onSubmit={handleSubmit}>
            <input
                type="text"
-               value={author}
-               onChange={(e) => setAuthor(e.target.value)}
-               placeholder="글쓴이"
+               value={title}
+               onChange={(e) => setTitle(e.target.value)}
+               placeholder="제목"
                required
            />
            <input
                type="text"
-               value={title}
-               onChange={(e) => setTitle(e.target.value)}
-               placeholder="제목"
+               value={author}
+               onChange={(e) => setAuthor(e.target.value)}
+               placeholder="글쓴이"
                required
            />
             <CKEditor

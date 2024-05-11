@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';  // Import useLocation
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const showNav = useLocation.pathname === '/community/posts';
+
 
   // Load posts from local storage and ensure proper initialization of the view count
   useEffect(() => {
@@ -21,7 +23,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Nav />
+      
       <Routes>
         <Route path="/community/" element={<PostList posts={posts} />} />
         <Route path="/community/new-post" element={<PostFormWrapper posts={posts} setPosts={setPosts} />} />
