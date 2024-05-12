@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip'; // Importing Tooltip for better accessibility
 
-function Nav() {
+function Write() {
   const navigate = useNavigate();
   const goToNewPost = () => navigate('/community/new-post');
 
@@ -19,4 +19,4 @@ function Nav() {
   );
 }
 
-  export default Nav;
+  export default Write;

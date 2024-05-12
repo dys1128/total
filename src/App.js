@@ -1,43 +1,38 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Nav from './Nav';
-import PostForm from './PostForm';
-import PostList from './PostList';
-import PostDetail from './PostDetail';
-import { useLocation } from 'react-router-dom';  // Import useLocation
+import CommunityForm from './CommunityForm';
+import Community from './Community';
+import CommunityDetail from './CommunityDetail';
+import { useLocation } from 'react-router-dom';  
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const showNav = useLocation.pathname === '/community/posts';
 
 
-  // Load posts from local storage and ensure proper initialization of the view count
   useEffect(() => {
     const storedPosts = JSON.parse(localStorage.getItem('posts')) || [];
     setPosts(storedPosts.map(post => ({
       ...post,
-      views: post.views || 0,  // Ensure view count is initialized if missing
+      views: post.views || 0, 
       createdAt: new Date(post.createdAt)
     })));
   }, []);
 
   return (
     <BrowserRouter>
-      
       <Routes>
-        <Route path="/community/" element={<PostList posts={posts} />} />
-        <Route path="/community/new-post" element={<PostFormWrapper posts={posts} setPosts={setPosts} />} />
-        <Route path="/community/posts/:postId" element={<PostDetail posts={posts} setPosts={setPosts} />} />
+        <Route path="/community/" element={<Community posts={posts} />} />
+        <Route path="/community/new-post" element={<CommunityFormWrapper posts={posts} setPosts={setPosts} />} />
+        <Route path="/community/posts/:postId" element={<CommunityDetail posts={posts} setPosts={setPosts} />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-function PostFormWrapper({ posts, setPosts }) {
+function CommunityFormWrapper({ posts, setPosts }) {
   const location = useLocation();
   const post = location.state?.post;  // Retrieve the post from state if it exists
-
-  return <PostForm posts={posts} setPosts={setPosts} post={post} />;
+  return <CommunityForm posts={posts} setPosts={setPosts} post={post} />;
 }
 
 export default App;

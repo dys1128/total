@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-function PostForm({ posts, setPosts, post: initialPost }) {
+function CommunityForm({ posts, setPosts, post: initialPost }) {
    const navigate = useNavigate();
    // Use initialPost data if present, otherwise default to empty strings or an empty object
    const [title, setTitle] = useState(initialPost?.title || '');
@@ -73,4 +73,4 @@ function PostForm({ posts, setPosts, post: initialPost }) {
    );
 }
 
-export default PostForm;
+export default CommunityForm;

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import styles from './PostList.module.css'; // CSS 모듈 사용
-import Nav from './Nav';
+
+import Write from './Write';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,23 +14,21 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 
-function PostList({ posts }) {
+function Community({ posts }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // 한 페이지에 표시할 게시글 수
-
-  // 페이지 변경 핸들러
+  const itemsPerPage = 10; 
+  console.log(posts);
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
-
-  // 현재 페이지에 표시할 게시글 계산
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = posts.slice(indexOfFirstItem, indexOfLastItem);
 
+
   return (
     <div>
-      <Nav />
+      <Write />
       <TableContainer component={Paper} sx={{ minWidth: 650, margin: '0 auto', maxWidth: '70%' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -64,10 +62,11 @@ function PostList({ posts }) {
           count={Math.ceil(posts.length / itemsPerPage)}
           page={currentPage}
           onChange={handlePageChange}
-          color="primary" // 선택적: 색상 변경
+          color="primary" 
         />
       </Stack>
     </div>
   );
 }
-export default PostList;
+
+export default Community;
