@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Commments.module.css'
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import {
+  Container,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  TextField,
+  Button,
+  Box
+} from '@mui/material';
 
 
 function Comments({ postId }) {
@@ -64,50 +64,47 @@ function Comments({ postId }) {
     //     </div>
     // );
     return (
-      <div >
-        <h3 className='con'></h3>
-        <TableContainer component={Paper} sx={{ minWidth: 650, margin: '0 auto', maxWidth: '70%' }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableBody>
-              {comments.map((post) => (
-                <TableRow
-                  key={post.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="center" component="th" scope="row">
-                    {post.author}
-                  </TableCell>
-                  <TableCell align="center">{post.content}</TableCell>
-                  <TableCell align="center">{new Date(post.date).toLocaleString()}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '80ch' },
-          }}
-          noValidate
-          autoComplete="off"
-          align = "center"
-        >
-          <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={3}
-            defaultValue="Default Value"
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            required
-          />
-          <Button variant="outlined" onClick={handleAddComment} >등록</Button>
-        </Box>
-        
-
-      </div>
-    );
+    <Container maxWidth="md">
+      <h3>댓글</h3>
+      <TableContainer component={Paper} sx={{ margin: '0 auto' }}>
+        <Table aria-label="simple table">
+          <TableBody>
+            {comments.map((comment) => (
+              <TableRow key={comment.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell align="center" component="th" scope="row">
+                  {comment.author}
+                </TableCell>
+                <TableCell align="center">{comment.content}</TableCell>
+                <TableCell align="center">{new Date(comment.date).toLocaleString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      
+      <Box component="form" sx={{ mt: 3 }} noValidate autoComplete="off">
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12}>
+            <TextField
+              id="outlined-multiline-static"
+              label="댓글을 입력하세요"
+              multiline
+              rows={4}
+              fullWidth
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              required
+            />
+          </Grid>
+          <Grid item>
+            <Button variant="contained" onClick={handleAddComment}>
+              등록
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
+  );
 
 }
 

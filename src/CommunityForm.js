@@ -3,6 +3,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+import {
+    Avatar,
+    Button,
+    CssBaseline,
+    TextField,
+    FormControl,
+    FormControlLabel,
+    Checkbox,
+    FormHelperText,
+    Grid,
+    Box,
+    Typography,
+    Container,
+  } from '@mui/material/';
+
 function CommunityForm({ posts, setPosts, post: initialPost }) {
    const navigate = useNavigate();
    // Use initialPost data if present, otherwise default to empty strings or an empty object
@@ -36,41 +51,76 @@ function CommunityForm({ posts, setPosts, post: initialPost }) {
    };
 
    return (
-       <form onSubmit={handleSubmit}>
-           <input
-               type="text"
-               value={title}
-               onChange={(e) => setTitle(e.target.value)}
-               placeholder="제목"
-               required
-           />
-           <input
-               type="text"
-               value={author}
-               onChange={(e) => setAuthor(e.target.value)}
-               placeholder="글쓴이"
-               required
-           />
+    <Container component="CommunityForm" maxWidth="md">
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              autoFocus
+              fullWidth
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              id="author"
+              name="author"
+              label="작성자"
+              size='small'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              type="title"
+              id="title"
+              name="title"
+              label="제목을 입력해주세요"
+              size='small'
+            />
+          </Grid>
+          <Grid item xs={12}>
             <CKEditor
-                editor={ClassicEditor}
-                data={content}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setContent(data);
-                }}
-                config={{
-                  height: '400px',
+              editor={ClassicEditor}
+              data={content}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setContent(data);
               }}
-                onReady={(editor) => {
-                  editor.editing.view.change(writer => {
-                    writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
+              config={{
+                height: '400px',
+              }}
+              onReady={(editor) => {
+                editor.editing.view.change(writer => {
+                  writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
                 });
               }}
             />
-           <button type="button" onClick={() => navigate('/community')}>취소</button>
-           <button type="submit">등록</button>
-       </form>
-   );
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              onClick={() => navigate('/community')}
+              type="button"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              size="small"
+            >
+              취소
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2, ml: 2 }}
+              size="small"
+            >
+              등록
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
+  );
 }
 
 export default CommunityForm;
