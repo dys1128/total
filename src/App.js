@@ -31,7 +31,7 @@ function App() {
 
 function CommunityFormWrapper({ posts, setPosts }) {
   const location = useLocation();
-  const post = location.state?.post;  // Retrieve the post from state if it exists
+  const post = location.state?.post;  
   return <CommunityForm posts={posts} setPosts={setPosts} post={post} />;
 }
 

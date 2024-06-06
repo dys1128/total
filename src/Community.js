@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import Write from './Write';
 import {
     Container,
     Grid,
@@ -12,8 +12,10 @@ import {
 } from '@mui/material';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
+import IconButton from '@mui/material/IconButton';
 
-const OPENCAGE_API_KEY = 'c603d421c0b64d6a83c499d11bba9429'; // Replace with your OpenCage API key
+const OPENCAGE_API_KEY = 'c603d421c0b64d6a83c499d11bba9429'; 
 
 function Community({ posts }) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +23,6 @@ function Community({ posts }) {
     const [showLocalPosts, setShowLocalPosts] = useState(false);
     const [location, setLocation] = useState('');
 
-    // Fetch user's location on component mount
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             const { latitude, longitude } = position.coords;
@@ -45,7 +46,7 @@ function Community({ posts }) {
 
     const handleToggleLocalPosts = () => {
         setShowLocalPosts(prevState => !prevState);
-        setCurrentPage(1); // Reset to first page on toggle
+        setCurrentPage(1); 
     };
 
     const filteredPosts = showLocalPosts
@@ -59,18 +60,34 @@ function Community({ posts }) {
     const truncateContent = (content, length) => {
         return content.length > length ? content.substring(0, length) + '...' : content;
     };
+    const navigate = useNavigate();
+    const goToNewPost = () => navigate('/community/new-post');
 
     return (
         <Container maxWidth="lg">
-            <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
-                <Grid item xs={12} sx={{ width: '100%' }}>
+            <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">                
+                {/* <Grid item xs={12} sx={{ width: '100%' }}>
                     <Write />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} sx={{ width: '100%' }}>
                     <Button variant="contained" onClick={handleToggleLocalPosts}>
                         {showLocalPosts ? '전체 글 보기' : '내 지역 글 보기'}
                     </Button>
                 </Grid>
+                
+                <Grid item xs={12} sx={{ width: '100%', minHeight: 60, maxHeight: 60 }}>
+                    <Paper sx={{ padding: 1, background:"#D9D9D9", borderColor:'grey'}}>
+                        <Grid item xs={{m:1}}  onClick={goToNewPost} >
+                            <Typography variant="underline"align="left" color="gray">
+                                새 글을 작성해 주세요.
+                            </Typography>
+                            <IconButton aria-label="write">
+                                <ModeOutlinedIcon />
+                            </IconButton>
+                        </Grid>
+                    </Paper>
+                </Grid>
+
                 <Grid item xs={12} sx={{ width: '100%'  }}>
                     <Grid container spacing={0.2} direction="column">
                         {currentItems.map((post) => (

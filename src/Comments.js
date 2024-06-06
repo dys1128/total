@@ -39,30 +39,7 @@ function Comments({ postId }) {
       setComments(updatedComments);
       setCommentText('');  
     };
-    // return (
-    //     <div className={`${styles.con} ${styles.reply}`}>
-    //       <h3 className="">댓글</h3>
-    //       <section className={`${styles.reply_list} ${styles.table_common}`}>
-    //         <table border="1">
-    //           {comments.map(comment => (
-    //             <div key={comment.id}>
-    //               <p><strong>{comment.author}</strong> ({new Date(comment.date).toLocaleString()}):</p>
-    //               <p>{comment.content}</p>
-    //             </div>
-    //           ))}
-    //         </table>
-    //       </section>
-    //       <h3 className=''>댓글 입력</h3>
-    //       <section className="styles.reply_form">
-    //         <textarea
-    //           value={commentText}
-    //           onChange={e => setCommentText(e.target.value)}
-    //           placeholder="댓글을 입력하세요..."
-    //         />
-    //         <button onClick={handleAddComment}>댓글 추가</button>
-    //       </section>
-    //     </div>
-    // );
+    
     return (
     <Container maxWidth="md">
       <h3>댓글</h3>

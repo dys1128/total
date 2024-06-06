@@ -9,7 +9,7 @@ import {
     Container,
 } from '@mui/material/';
 
-const OPENCAGE_API_KEY = 'c603d421c0b64d6a83c499d11bba9429'; // Replace with your OpenCage API key
+const OPENCAGE_API_KEY = 'c603d421c0b64d6a83c499d11bba9429';
 
 function CommunityForm({ posts, setPosts, post: initialPost }) {
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ function CommunityForm({ posts, setPosts, post: initialPost }) {
                 content,
                 date: new Date().toISOString(),
                 location,
-                views: 0, // Initialize views to 0
+                views: 0, 
             };
             const newPosts = [newPost, ...postsArray];
             localStorage.setItem('posts', JSON.stringify(newPosts));
