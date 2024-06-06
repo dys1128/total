@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
-
 import {
   Container,
   Grid,
@@ -13,11 +12,10 @@ import {
 } from '@mui/material';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 
-
 function CommunityDetail({ posts, setPosts }) {
   const { postId } = useParams();
   const navigate = useNavigate();
-  const postIndex = posts.findIndex(p => p.id === parseInt(postId));
+  const postIndex = posts.findIndex((p) => p.id === parseInt(postId));
   const post = posts[postIndex];
   const [showOptions, setShowOptions] = useState(false);
 
@@ -25,7 +23,7 @@ function CommunityDetail({ posts, setPosts }) {
     if (post) {
       const updatedPosts = [...posts];
       updatedPosts[postIndex] = { ...post, views: post.views + 1 };
-  
+
       localStorage.setItem('posts', JSON.stringify(updatedPosts));
       setPosts(updatedPosts);
     }
@@ -40,7 +38,7 @@ function CommunityDetail({ posts, setPosts }) {
   };
 
   const deletePost = () => {
-    const updatedPosts = posts.filter(p => p.id !== parseInt(postId));
+    const updatedPosts = posts.filter((p) => p.id !== parseInt(postId));
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
     setPosts(updatedPosts);
     navigate('/community');
@@ -97,6 +95,5 @@ function CommunityDetail({ posts, setPosts }) {
     </Container>
   );
 }
-
 
 export default CommunityDetail;
